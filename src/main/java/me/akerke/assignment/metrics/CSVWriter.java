@@ -25,7 +25,7 @@ public final class CSVWriter implements AutoCloseable {
     }
 
     public void write(String algo, long timeNs, int depth, long comps) {
-        pw.printf("%s,%d,%d,%d,%d\n", algo, timeNs, depth, comps);
+        pw.printf("%s,%d,%d,%d,\n", algo, timeNs, depth, comps);
     }
 
     public void close(){ pw.close(); }
