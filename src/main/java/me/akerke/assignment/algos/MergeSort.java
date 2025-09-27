@@ -3,6 +3,7 @@ package me.akerke.assignment.algos;
 import me.akerke.assignment.metrics.CSVWriter;
 import me.akerke.assignment.metrics.DepthTracker;
 import me.akerke.assignment.metrics.Metrics;
+import me.akerke.assignment.utils.SortUtils;
 
 import java.util.Random;
 
@@ -40,7 +41,7 @@ public class MergeSort {
 
         int n = right - left;
         if (n <= CUTOFF) {
-            insertionSort(arr, left, right, metrics);
+            SortUtils.insertionSort(arr, left, right, metrics);
             depth.exit();
             return;
         }
@@ -67,20 +68,6 @@ public class MergeSort {
         while (j < right) buffer[k++] = arr[j++];
 
         System.arraycopy(buffer, left, arr, left, right - left);
-    }
-
-    private static void insertionSort(int[] arr, int left, int right, Metrics metrics) {
-        for (int i = left + 1; i < right; i++) {
-            int key = arr[i];
-            int j = i - 1;
-            while (j >= left) {
-                metrics.incrementComparisons();
-                if (arr[j] <= key) break;
-                arr[j + 1] = arr[j];
-                j--;
-            }
-            arr[j + 1] = key;
-        }
     }
 
 }

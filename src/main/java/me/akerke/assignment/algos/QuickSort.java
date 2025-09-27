@@ -3,6 +3,7 @@ package me.akerke.assignment.algos;
 import me.akerke.assignment.metrics.CSVWriter;
 import me.akerke.assignment.metrics.DepthTracker;
 import me.akerke.assignment.metrics.Metrics;
+import me.akerke.assignment.utils.SortUtils;
 
 import java.util.Random;
 
@@ -36,7 +37,7 @@ public class QuickSort {
         while (hi - lo > 1) {
             int n = hi - lo;
             if (n <= CUTOFF) {
-                insertionSort(arr, lo, hi, metrics);
+                SortUtils.insertionSort(arr, lo, hi, metrics);
                 return;
             }
 
@@ -59,42 +60,8 @@ public class QuickSort {
 
     private static int randomizedPartition(int[] arr, int lo, int hi, Metrics metrics) {
         int pivotIndex = lo + rnd.nextInt(hi - lo);
-        swap(arr, pivotIndex, hi - 1);
-        return partition(arr, lo, hi, metrics);
-    }
-
-    private static void insertionSort(int[] arr, int left, int right, Metrics metrics) {
-        for (int i = left + 1; i < right; i++) {
-            int key = arr[i];
-            int j = i - 1;
-            while (j >= left) {
-                metrics.incrementComparisons();
-                if (arr[j] <= key) break;
-                arr[j + 1] = arr[j];
-                j--;
-            }
-            arr[j + 1] = key;
-        }
-    }
-
-    private static void swap(int[] arr, int i, int j) {
-        int tmp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = tmp;
-    }
-
-    private static int partition(int[] arr, int left, int right, Metrics metrics) {
-        int pivot = arr[right - 1];
-        int i = left;
-        for (int j = left; j < right - 1; j++) {
-            metrics.incrementComparisons();
-            if (arr[j] <= pivot) {
-                swap(arr, i, j);
-                i++;
-            }
-        }
-        swap(arr, i, right - 1);
-        return i;
+        SortUtils.swap(arr, pivotIndex, hi - 1);
+        return SortUtils.partition(arr, lo, hi, metrics);
     }
 
 }
